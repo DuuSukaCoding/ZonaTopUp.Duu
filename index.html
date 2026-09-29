@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZonaTopUp.Duu</title>
+
+<style>
+* {
+box-sizing:border-box;
+    margin:0;
+    padding:0}
+ html {
+scroll-behavior:smooth}
+ body {
+font-family:Arial,sans-serif;
+    background:#020617;
+    color:white;
+    overflow-x:hidden}
+ body::before,body::after {
+content:"";
+    position:fixed;
+    width:300px;
+    height:300px;
+    border-radius:50%;
+    filter:blur(100px);
+    opacity:.25;
+    z-index:-1}
+ body::before {
+background:#00ff88;
+    top:-100px;
+    left:-100px}
+ body::after {
+background:#2563eb;
+    right:-100px;
+    bottom:-100px}
+ header {
+position:sticky;
+    top:0;
+    z-index:100;
+    padding:18px 7%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    background:rgba(2,6,23,.8);
+    backdrop-filter:blur(15px);
+    border-bottom:1px solid rgba(255,255,255,.08)}
+ .logo {
+display:flex;
+    align-items:center;
+    gap:10px;
+    font-size:22px;
+    font-weight:bold}
+ .logo img {
+width:38px;
+    height:38px;
+    object-fit:contain;
+    border-radius:10px;
+    display:block}
+ .logo span {
+color:#00ff88}
+ nav {
+display:flex;
+    gap:25px}
+nav a {
+color:#aaa;
+    text-decoration:none;
+    font-size:14px;
+    transition:.3s}
+nav a:hover {
+color:#00ff88}
+ .hero {
+min-height:520px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:80px 20px;
+    position:relative}
+ .hero-content {
+max-width:750px}
+.badge {
+display:inline-block;
+    padding:8px 15px;
+    border:1px solid rgba(0,255,136,.3);
+    background:rgba(0,255,136,.08);
+    color:#00ff88;
+    border-radius:50px;
+    font-size:13px;
+    margin-bottom:20px}
+ .hero h1 {
+font-size:clamp(40px,8vw,75px);
+    line-height:1;
+    margin-bottom:20px}
+.hero h1 span {
+color:#00ff88}
+ .hero p {
+color:#94a3b8;
+    font-size:17px;
+    line-height:1.7;
+    margin-bottom:30px}
+ .hero-btn {
+display:inline-block;
+    padding:14px 25px;
+    border-radius:12px;
+    background:#00ff88;
+    color:#001b0e;
+    text-decoration:none;
+    font-weight:bold;
+    box-shadow:0 0 30px rgba(0,255,136,.2);
+    transition:.3s}
+ .hero-btn:hover {
+transform:translateY(-3px);
+    box-shadow:0 0 40px rgba(0,255,136,.4)}
+ section {
+padding:70px 7%}
+.section-title {
+text-align:center;
+    margin-bottom:35px}
+.section-title h2 {
+font-size:32px;
+    margin-bottom:10px}
+.section-title p {
+color:#64748b}
+ .features {
+display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px}
+ .feature {
+background:rgba(15,23,42,.7);
+    border:1px solid rgba(255,255,255,.07);
+    padding:25px 15px;
+    border-radius:18px;
+    text-align:center;
+    transition:.3s}
+ .feature:hover {
+transform:translateY(-5px);
+    border-color:rgba(0,255,136,.3)}
+.feature-icon {
+font-size:30px;
+    margin-bottom:12px}
+.feature h3 {
+font-size:16px;
+    margin-bottom:7px}
+.feature p {
+color:#64748b;
+    font-size:13px}
+ .category-buttons {
+display:flex;
+    justify-content:center;
+    gap:12px;
+    flex-wrap:wrap;
+    margin-bottom:30px}
+ .category-buttons button {
+border:1px solid #1e293b;
+    background:#0f172a;
+    color:#94a3b8;
+    padding:12px 22px;
+    border-radius:12px;
+    cursor:pointer;
+    font-weight:bold;
+    transition:.3s}
+ .category-buttons button:hover,.category-buttons button.active {
+background:#00ff88;
+    color:#001b0e;
+    border-color:#00ff88}
+ .container {
+display:none;
+    grid-template-columns:repeat(4,1fr);
+    gap:18px;
+    max-width:1000px;
+    margin:auto}
+.container.active {
+display:grid}
+ .product {
+position:relative;
+    background:rgba(15,23,42,.8);
+    border:1px solid rgba(255,255,255,.07);
+    border-radius:20px;
+    padding:18px;
+    text-align:center;
+    cursor:pointer;
+    transition:.3s;
+    overflow:hidden}
+ .product:hover {
+transform:translateY(-7px);
+    border-color:rgba(0,255,136,.5);
+    box-shadow:0 15px 40px rgba(0,0,0,.3)}
+ .product img {
+width:100%;
+    aspect-ratio:1;
+    object-fit:cover;
+    border-radius:15px;
+    margin-bottom:14px}
+.product h3 {
+font-size:15px;
+    margin-bottom:7px}
+.available {
+font-size:11px;
+    color:#00ff88}
+ .wa-card {
+display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-decoration:none;
+    color:white}
+.wa-icon {
+width:100px;
+    height:100px;
+    border-radius:25px;
+    background:#075e54;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:45px;
+    margin-bottom:15px}
+ .form {
+display:none;
+    max-width:500px;
+    margin:40px auto 0;
+    background:rgba(15,23,42,.95);
+    border:1px solid rgba(0,255,136,.2);
+    border-radius:22px;
+    padding:30px;
+    box-shadow:0 20px 60px rgba(0,0,0,.35);
+    animation:fadeUp .4s ease}
+ .form.show {
+display:block}
+.form h3 {
+font-size:25px;
+    margin-bottom:8px}
+.form-subtitle {
+color:#64748b;
+    font-size:13px;
+    margin-bottom:25px}
+ .input-group {
+text-align:left;
+    margin-bottom:15px}
+.input-group label {
+display:block;
+    color:#94a3b8;
+    font-size:13px;
+    margin-bottom:7px}
+ input {
+width:100%;
+    padding:14px;
+    background:#020617;
+    color:white;
+    border:1px solid #1e293b;
+    border-radius:11px;
+    outline:none}
+input:focus {
+border-color:#00ff88}
+ .kirim {
+width:100%;
+    margin-top:10px;
+    padding:15px;
+    border:none;
+    border-radius:11px;
+    background:#00ff88;
+    color:#001b0e;
+    font-weight:bold;
+    cursor:pointer;
+    transition:.3s}
+ .kirim:hover {
+transform:translateY(-2px);
+    box-shadow:0 10px 25px rgba(0,255,136,.2)}
+ .kembali {
+width:100%;
+    margin-top:10px;
+    padding:12px;
+    border:1px solid #1e293b;
+    border-radius:11px;
+    background:transparent;
+    color:#94a3b8;
+    cursor:pointer}
+ footer {
+margin-top:60px;
+    padding:35px 20px;
+    text-align:center;
+    border-top:1px solid rgba(255,255,255,.07);
+    color:#64748b;
+    font-size:13px}
+footer strong {
+color:#00ff88}
+ .notif {
+position:fixed;
+    left:50%;
+    bottom:25px;
+    transform:translateX(-50%) translateY(20px);
+    background:#111827;
+    border:1px solid #334155;
+    padding:13px 20px;
+    border-radius:12px;
+    display:none;
+    z-index:1000;
+    font-size:14px;
+    box-shadow:0 10px 30px rgba(0,0,0,.4)}
+ .notif.show {
+display:block;
+    animation:notif .3s ease forwards}
+ .loading {
+position:fixed;
+    inset:0;
+    background:rgba(2,6,23,.8);
+    backdrop-filter:blur(5px);
+    display:none;
+    justify-content:center;
+    align-items:center;
+    z-index:999}
+ .loader-box {
+text-align:center}
+.loader {
+width:45px;
+    height:45px;
+    border:4px solid #1e293b;
+    border-top-color:#00ff88;
+    border-radius:50%;
+    animation:spin 1s linear infinite;
+    margin:auto auto 12px}
+.loader-box p {
+color:#94a3b8;
+    font-size:13px}
+ @keyframes spin {
+to {
+transform:rotate(360deg)}
+}
+@keyframes fadeUp {
+from {
+opacity:0;
+    transform:translateY(20px)}
+to {
+opacity:1;
+    transform:translateY(0)}
+}
+@keyframes notif {
+to {
+transform:translateX(-50%) translateY(0)}
+}
+ @media(max-width:800px) {
+ header {
+padding:16px 5%}
+nav {
+display:none}
+section {
+padding:55px 5%}
+.hero {
+min-height:500px}
+ .features {
+grid-template-columns:repeat(2,1fr)}
+.container {
+grid-template-columns:repeat(2,1fr);
+    gap:12px}
+.product {
+padding:12px;
+    border-radius:16px}
+.product img {
+border-radius:12px}
+ }
+ @media(max-width:450px) {
+ .hero h1 {
+font-size:42px}
+.hero p {
+font-size:14px}
+.features {
+gap:10px}
+.feature {
+padding:20px 10px}
+.feature-icon {
+font-size:25px}
+.section-title h2 {
+font-size:27px}
+ }
+ button, a, .product, input {
+ -webkit-tap-highlight-color: transparent;
+    outline:none;
+}
+ button:focus, a:focus, .product:focus, input:focus {
+ outline:none;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">
+        <img src="img/logo.png" alt="Logo ZonaTopUp.Duu">
+        <div>Zona<span>TopUp</span>.Duu</div>
+    </div>
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#produk">Produk</a>
+        <a href="#keunggulan">Keunggulan</a>
+        <a href="https://wa.me/6283867317039" target="_blank">Bantuan</a>
+    </nav>
+</header>
+
+<section class="hero" id="home">
+    <div class="hero-content">
+        <div class="badge">⚡ TOP UP CEPAT & MUDAH</div>
+        <h1>Top Up Tanpa<br><span>Ribet.</span></h1>
+        <p>Isi saldo game, e-wallet, dan pulsa dengan proses pemesanan yang simpel langsung melalui WhatsApp.</p>
+        <a href="#produk" class="hero-btn">Mulai Top Up</a>
+    </div>
+</section>
+
+<section id="keunggulan">
+    <div class="section-title">
+        <h2>Kenapa ZonaTopUp?</h2>
+        <p>Dirancang supaya proses top up tetap simpel.</p>
+    </div>
+    <div class="features">
+        <div class="feature"><div class="feature-icon">⚡</div><h3>Proses Cepat</h3><p>Pesanan langsung diteruskan melalui WhatsApp.</p></div>
+        <div class="feature"><div class="feature-icon">🔒</div><h3>Aman</h3><p>Data pesanan dikirim langsung ke admin.</p></div>
+        <div class="feature"><div class="feature-icon">💬</div><h3>WhatsApp</h3><p>Komunikasi langsung dengan admin.</p></div>
+        <div class="feature"><div class="feature-icon">💰</div><h3>Mudah</h3><p>Pilih produk, isi tujuan, lalu pesan.</p></div>
+    </div>
+</section>
+
+<section id="produk">
+    <div class="section-title">
+        <h2>Pilih Produk</h2>
+        <p>Pilih kategori top up yang kamu butuhkan.</p>
+    </div>
+
+    <div class="category-buttons">
+        <button class="active" onclick="showCategory('game',this)">🎮 Game</button>
+        <button onclick="showCategory('ewallet',this)">💳 E-Wallet</button>
+        <button onclick="showCategory('pulsa',this)">📱 Pulsa</button>
+    </div>
+
+    <div class="container active" id="game">
+        <div class="product" onclick="pilih('Mobile Legends')"><img src="img/ml.jpg" alt="Mobile Legends"><h3>Mobile Legends</h3><span class="available">● Tersedia</span></div>
+        <div class="product" onclick="pilih('Free Fire')"><img src="img/ff.jpg" alt="Free Fire"><h3>Free Fire</h3><span class="available">● Tersedia</span></div>
+        <div class="product" onclick="pilih('PUBG')"><img src="img/pubg.jpg" alt="PUBG"><h3>PUBG Mobile</h3><span class="available">● Tersedia</span></div>
+        <a class="product wa-card" href="https://wa.me/6283867317039" target="_blank"><div class="wa-icon">💬</div><h3>Produk Lain</h3><span class="available">Tanya Admin</span></a>
+    </div>
+
+    <div class="container" id="ewallet">
+        <div class="product" onclick="pilih('DANA')"><img src="img/dana.jpg" alt="DANA"><h3>DANA</h3><span class="available">● Tersedia</span></div>
+        <div class="product" onclick="pilih('GOPAY')"><img src="img/gopay.jpg" alt="GOPAY"><h3>GOPAY</h3><span class="available">● Tersedia</span></div>
+        <div class="product" onclick="pilih('OVO')"><img src="img/ovo.jpg" alt="OVO"><h3>OVO</h3><span class="available">● Tersedia</span></div>
+        <a class="product wa-card" href="https://wa.me/6283867317039" target="_blank"><div class="wa-icon">💬</div><h3>Produk Lain</h3><span class="available">Tanya Admin</span></a>
+    </div>
+
+    <div class="container" id="pulsa">
+        <div class="product" onclick="pilih('Telkomsel')"><img src="img/telkomsel.jpg" alt="Telkomsel"><h3>Telkomsel</h3><span class="available">● Tersedia</span></div>
+        <div class="product" onclick="pilih('XL')"><img src="img/xl.jpg" alt="XL"><h3>XL</h3><span class="available">● Tersedia</span></div>
+        <div class="product" onclick="pilih('Indosat')"><img src="img/indosat.jpg" alt="Indosat"><h3>Indosat</h3><span class="available">● Tersedia</span></div>
+        <a class="product wa-card" href="https://wa.me/6283867317039" target="_blank"><div class="wa-icon">💬</div><h3>Produk Lain</h3><span class="available">Tanya Admin</span></a>
+    </div>
+
+    <div class="form" id="form">
+        <h3 id="judul">Top Up</h3>
+        <p class="form-subtitle">Isi data berikut untuk membuat pesanan.</p>
+
+        <div class="input-group">
+            <label id="labelTujuan">ID / Nomor Tujuan</label>
+            <input id="tujuan" type="text" placeholder="Masukkan ID / nomor tujuan">
+        </div>
+
+        <div class="input-group">
+            <label>Nominal Top Up</label>
+            <input id="nominal" type="number" inputmode="numeric" min="1000" placeholder="Contoh: 25000">
+        </div>
+
+        <button class="kirim" onclick="kirim()">Pesan via WhatsApp</button>
+        <button class="kembali" onclick="reset()">Kembali</button>
+    </div>
+</section>
+
+<footer>
+    <p><strong>ZonaTopUp.Duu</strong></p><br>
+    <p>Top Up Game • E-Wallet • Pulsa</p><br>
+    <p>© 2026 ZonaTopUp.Duu</p>
+</footer>
+
+<div class="notif" id="notif"></div>
+
+<div class="loading" id="loading">
+    <div class="loader-box">
+        <div class="loader"></div>
+        <p>Membuka WhatsApp...</p>
+    </div>
+</div>
+
+<script>
+const WA = "6283867317039";
+    let produk = "";
+    function showCategory(id, button) {
+    document.querySelectorAll(".container").forEach(container=> {
+
+    container.classList.remove("active");
+}
+
+);
+    document.getElementById(id).classList.add("active");
+    document.querySelectorAll(".category-buttons button").forEach(btn=> {
+
+    btn.classList.remove("active");
+}
+
+);
+    button.classList.add("active");
+    reset();
+}
+
+function pilih(nama) {
+    produk = nama;
+    document.getElementById("judul").innerText = "Top Up " + nama;
+    document.getElementById("form").classList.add("show");
+    document.getElementById("form").scrollIntoView( {
+    behavior:"smooth", block:"center"
+}
+
+);
+}
+
+function reset() {
+    document.getElementById("form").classList.remove("show");
+    document.getElementById("tujuan").value = "";
+    document.getElementById("nominal").value = "";
+}
+
+function notif(teks) {
+    const n = document.getElementById("notif");
+    n.innerText = teks;
+    n.classList.add("show");
+    setTimeout(()=> {
+
+    n.classList.remove("show");
+}
+
+,2000);
+}
+
+function kirim() {
+    const tujuan = document.getElementById("tujuan").value.trim();
+    const nominal = document.getElementById("nominal").value.trim();
+    if(!produk) {
+    notif("Pilih produk dulu!");
+    return;
+}
+
+if(!tujuan) {
+    notif("Masukkan ID / nomor tujuan!");
+    return;
+}
+
+if(!nominal) {
+    notif("Masukkan nominal dulu!");
+    return;
+}
+
+if(Number(nominal) < 1000) {
+    notif("Minimal nominal Rp1.000!");
+    return;
+}
+
+const pesan = `Halo kak, saya mau top up. Produk: $ {
+    produk
+}
+
+Tujuan: $ {
+    tujuan
+}
+
+Nominal: Rp$ {
+    Number(nominal).toLocaleString("id-ID")
+}
+
+Mohon diproses ya kak.`;
+    document.getElementById("loading").style.display = "flex";
+    setTimeout(()=> {
+
+    window.open( `https://wa.me/$ {
+    WA
+}
+
+?text=$ {
+    encodeURIComponent(pesan)
+}
+
+`, "_blank" );
+    document.getElementById("loading").style.display = "none";
+}
+
+,800);
+}
+</script>
+
+</body>
+</html>
